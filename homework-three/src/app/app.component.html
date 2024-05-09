@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="form">
+    <input class="top-space" type="text" placeholder="Заглавие на бележката" [(ngModel)]="modelTitle" [ngStyle]="applyTitleInputStyle()">
+    @if (modelTitle.length < minimumTitleLength) {
+      <span class="warning">Минимално количество символи: 5</span>
+    }
+    <textarea class="top-space" placeholder="Съдържание на бележката" [(ngModel)]="modelDescription" [ngStyle]="applyDescriptionInputStyle()"></textarea>
+    @if (modelDescription.length < minimumDescriptionLength) {
+      <span class="warning">Минимално количество символи: 7</span>
+    }
+    <button class="top-space" [disabled]="saveButtonDisabled" (click)="saveNote()">Съхрани бележката</button>
+  </div>
+  <div class="notes">
+    @for (element of notesList; track $index) {
+      <div (click)="changeSelectedNote($index)" class="note">
+        <div>Заглавие: {{element.title}}</div>
+        <div>Съдържание: {{element.description}}</div>
+        @if ($index == selectedNoteIndex) {
+          <button (click)="deleteNote($index)">Изтрии</button>
+          <button (click)="editNote($index)">Редакция</button>
+        }       
+      </div>
+    }
+  </div>
+</div>
